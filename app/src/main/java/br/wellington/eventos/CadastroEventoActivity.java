@@ -71,7 +71,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
         }else if(data.matches("")){
             Toast.makeText(CadastroEventoActivity.this,"Data é obrigatório", Toast.LENGTH_LONG).show();
         }else if(local.matches("")){
-        Toast.makeText(CadastroEventoActivity.this,"Local é obrigatório", Toast.LENGTH_LONG).show();
+            Toast.makeText(CadastroEventoActivity.this,"Local é obrigatório", Toast.LENGTH_LONG).show();
         }else{
             finish();
         }
