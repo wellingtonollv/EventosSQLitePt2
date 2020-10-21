@@ -31,8 +31,6 @@ public class CadastroEventoActivity extends AppCompatActivity {
 
 
     //DATAPICKER
-    private static final String TAG = "CadastroEventoActivity";
-    private EditText mostrarData;
     private DatePickerDialog.OnDateSetListener mostrarDataListener;
     //
 
@@ -48,7 +46,8 @@ public class CadastroEventoActivity extends AppCompatActivity {
 
     private void dataPicker(){
 
-        mostrarData= (EditText) findViewById(R.id.editText_data);
+
+        final EditText mostrarData= (EditText) findViewById(R.id.editText_data);
 
         mostrarData.setOnClickListener(new View.OnClickListener() {
             @Override
