@@ -1,9 +1,28 @@
 package br.wellington.eventos.modelo;
 
-public class Evento {
+import java.io.Serializable;
+
+public class Evento implements Serializable {
+
+    private int id;
     private String nome;
     private String data;
     private String local;
+
+    public Evento(int id, String nome, String data, String local) {
+        this.id = id;
+        this.nome = nome;
+        this.data = data;
+        this.local = local;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Evento(String nome, String data, String local) {
         this.nome = nome;
