@@ -24,11 +24,6 @@ public class Evento implements Serializable {
         this.id = id;
     }
 
-    public Evento(String nome, String data, String local) {
-        this.nome = nome;
-        this.data = data;
-        this.local = local;
-    }
     public String getNome() {
         return nome;
     }
