@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import br.wellington.eventos.modelo.Evento;
 
@@ -55,6 +56,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
         String local = editTextLocal.getText().toString();
 
         Evento evento = new Evento(id,nome,data,local);
+
         Intent intent = new Intent();
         if(edicao){
             intent.putExtra("eventoEditado", evento);
@@ -64,9 +66,15 @@ public class CadastroEventoActivity extends AppCompatActivity {
             setResult(RESULT_CODE_NOVO_EVENTO, intent);
         }
 
+        if(nome.matches("")){
+            Toast.makeText(CadastroEventoActivity.this,"Nome é obrigatório", Toast.LENGTH_LONG).show();
+        }else if(data.matches("")){
+            Toast.makeText(CadastroEventoActivity.this,"Data é obrigatório", Toast.LENGTH_LONG).show();
+        }else if(local.matches("")){
+        Toast.makeText(CadastroEventoActivity.this,"Local é obrigatório", Toast.LENGTH_LONG).show();
+        }else{
+            finish();
+        }
 
-
-
-        finish();
     }
 }
