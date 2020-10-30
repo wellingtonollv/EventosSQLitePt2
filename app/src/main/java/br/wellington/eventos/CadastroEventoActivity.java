@@ -19,14 +19,11 @@ import org.w3c.dom.Text;
 import java.util.Calendar;
 import java.util.Date;
 
+import br.wellington.eventos.database.EventoDAO;
 import br.wellington.eventos.modelo.Evento;
 
 public class CadastroEventoActivity extends AppCompatActivity {
 
-    private final int RESULT_CODE_NOVO_EVENTO = 10;
-    private final int RESULT_CODE_EVENTO_EDITADO = 11;
-
-    private boolean edicao = false;
     private int id = 0;
 
 
@@ -53,9 +50,9 @@ public class CadastroEventoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar cal =  Calendar.getInstance();
-                int ano = cal.get(Calendar.YEAR);
-                int mes = cal.get(Calendar.MONTH);
                 int dia = cal.get(Calendar.DAY_OF_MONTH);
+                int mes = cal.get(Calendar.MONTH);
+                int ano = cal.get(Calendar.YEAR);
 
                 DatePickerDialog dialog = new DatePickerDialog(CadastroEventoActivity.this,
                         android.R.style.Theme_Holo_Dialog_NoActionBar_MinWidth, mostrarDataListener, ano, mes,dia);
@@ -85,7 +82,6 @@ public class CadastroEventoActivity extends AppCompatActivity {
             editTextNome.setText(evento.getNome());
             editTextData.setText(evento.getData());
             editTextLocal.setText(evento.getLocal());
-            edicao=true;
             id= evento.getId();
         }
     }
@@ -93,6 +89,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
     public void onClickVoltar(View v){
         finish();
     }
+
     public void onClickSalvar(View v){
         EditText editTextNome = findViewById(R.id.editText_nome);
         EditText editTextData = findViewById(R.id.editText_data);
@@ -103,18 +100,17 @@ public class CadastroEventoActivity extends AppCompatActivity {
         String local = editTextLocal.getText().toString();
 
         Evento evento = new Evento(id,nome,data,local);
-
-        Intent intent = new Intent();
-        if(edicao){
-            intent.putExtra("eventoEditado", evento);
-            setResult(RESULT_CODE_EVENTO_EDITADO, intent);
-        }else{
-            intent.putExtra("novoEvento",evento);
-            setResult(RESULT_CODE_NOVO_EVENTO, intent);
+        EventoDAO eventoDao = new EventoDAO(getBaseContext());
+        boolean salvou = eventoDao.salvar(evento);
+        if(salvou){
+            finish();
+        }
+        else{
+            Toast.makeText(CadastroEventoActivity.this, "Erro ao salvar!", Toast.LENGTH_LONG).show();
         }
 
 
-
+        //CAMPO OBRIGATORIO
         if(nome.matches("")){
             Toast.makeText(CadastroEventoActivity.this,"Nome é obrigatório", Toast.LENGTH_LONG).show();
         }else if(data.matches("")){
@@ -124,6 +120,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
         }else{
             finish();
         }
+        //
 
     }
 }
