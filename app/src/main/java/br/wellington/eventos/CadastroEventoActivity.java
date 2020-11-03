@@ -37,7 +37,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_evento);
         setTitle("Cadastro de Eventos");
 
-        carregarProduto();
+        carregarEvento();
         dataPicker();
     }
 
@@ -71,7 +71,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
 
     }
 
-    private void carregarProduto(){
+    private void carregarEvento(){
         Intent intent = getIntent();
         if(intent!=null && intent.getExtras() != null && intent.getExtras().get("eventoEdicao") !=null){
             Evento evento = (Evento) intent.getExtras().get("eventoEdicao");
@@ -101,26 +101,29 @@ public class CadastroEventoActivity extends AppCompatActivity {
 
         Evento evento = new Evento(id,nome,data,local);
         EventoDAO eventoDao = new EventoDAO(getBaseContext());
-        boolean salvou = eventoDao.salvar(evento);
-        if(salvou){
-            finish();
-        }
-        else{
-            Toast.makeText(CadastroEventoActivity.this, "Erro ao salvar!", Toast.LENGTH_LONG).show();
-        }
 
 
-        //CAMPO OBRIGATORIO
-        if(nome.matches("")){
-            Toast.makeText(CadastroEventoActivity.this,"Nome é obrigatório", Toast.LENGTH_LONG).show();
-        }else if(data.matches("")){
-            Toast.makeText(CadastroEventoActivity.this,"Data é obrigatório", Toast.LENGTH_LONG).show();
-        }else if(local.matches("")){
-            Toast.makeText(CadastroEventoActivity.this,"Local é obrigatório", Toast.LENGTH_LONG).show();
+
+        if(evento.getNome().matches("")){
+            Toast.makeText(CadastroEventoActivity.this,
+                    "Nome é obrigatório", Toast.LENGTH_LONG).show();
+        }else if(evento.getData().matches("")){
+            Toast.makeText(CadastroEventoActivity.this,
+                    "Data é obrigatório", Toast.LENGTH_LONG).show();
+        }else if(evento.getLocal().matches("")){
+            Toast.makeText(CadastroEventoActivity.this,
+                    "Local é obrigatório", Toast.LENGTH_LONG).show();
         }else{
-            finish();
+            boolean salvou = eventoDao.salvar(evento);
+
+            if(salvou){
+                finish();
+            }
+            else{
+                Toast.makeText(CadastroEventoActivity.this, "Erro ao salvar!", Toast.LENGTH_LONG).show();
+            }
         }
-        //
+
 
     }
 }

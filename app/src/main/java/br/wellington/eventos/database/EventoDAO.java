@@ -2,12 +2,16 @@ package br.wellington.eventos.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
 
+import br.wellington.eventos.CadastroEventoActivity;
+import br.wellington.eventos.MainActivity;
 import br.wellington.eventos.database.entity.EventoEntity;
 import br.wellington.eventos.modelo.Evento;
 
@@ -27,15 +31,18 @@ public class EventoDAO {
         contentValues.put(EventoEntity.COLUMN_NAME_DATA, evento.getData());
         contentValues.put(EventoEntity.COLUMN_NAME_LOCAL, evento.getLocal());
 
-        if(evento.getId() > 0) {
-            return dbGateway.getDataBase().update(EventoEntity.TABLE_NAME,
-                    contentValues,
-                    EventoEntity._ID + "=?",
-                    new String[]{String.valueOf(evento.getId())}) > 0;
-        }
+            if(evento.getId() > 0) {
+                return dbGateway.getDataBase().update(EventoEntity.TABLE_NAME,
+                        contentValues,
+                        EventoEntity._ID + "=?",
+                        new String[]{String.valueOf(evento.getId())}) > 0;
+            }
 
-        return dbGateway.getDataBase().insert(EventoEntity.TABLE_NAME,
-                null, contentValues) > 0;
+            return dbGateway.getDataBase().insert(EventoEntity.TABLE_NAME,
+                    null, contentValues) > 0;
+
+
+
     }
 
     public boolean delete(long id) {
