@@ -5,24 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".ListarLocaisActivity" >
 
     <ListView
-        android:id="@+id/listView_eventos"
+        android:id="@+id/listView_locais"
         android:layout_width="match_parent"
-        android:layout_height="450dp" />
+        android:layout_height="400dp" />
 
     <Button
-        android:id="@+id/btn_novo_evento"
+        android:id="@+id/btnNovoLocal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickNovoEvento"
-        android:text="NOVO EVENTO" />
+        android:onClick="onClickNovoLocais"
+        android:text="novo local" />
 
     <Button
-        android:id="@+id/btnLocais"
+        android:id="@+id/btnEventos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickLocais"
-        android:text="LOCAIS" />
+        android:onClick="onClickEventos"
+        android:text="Eventos" />
 </LinearLayout>

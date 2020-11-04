@@ -7,13 +7,22 @@ public class Evento implements Serializable {
     private int id;
     private String nome;
     private String data;
-    private String local;
+    private Locais locais;
 
-    public Evento(int id, String nome, String data, String local) {
+    public Evento(int id, String nome, String data, Locais locais) {
         this.id = id;
         this.nome = nome;
         this.data = data;
-        this.local = local;
+
+        this.locais = locais;
+    }
+
+    public Locais getLocais() {
+        return locais;
+    }
+
+    public void setLocais(Locais locais) {
+        this.locais = locais;
     }
 
     public int getId() {
@@ -40,16 +49,13 @@ public class Evento implements Serializable {
         this.data = data;
     }
 
-    public String getLocal() {
-        return local;
-    }
 
-    public void setLocal(String local) {
-        this.local = local;
-    }
+
+
 
     @Override
     public String toString() {
-        return nome + " - " + data + " - " + local ;
+
+        return this.nome + " - " + data + " | Local: " + locais;
     }
 }

@@ -9,8 +9,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +22,15 @@ import java.util.Calendar;
 import java.util.Date;
 
 import br.wellington.eventos.database.EventoDAO;
+import br.wellington.eventos.database.LocaisDAO;
 import br.wellington.eventos.modelo.Evento;
+import br.wellington.eventos.modelo.Locais;
 
 public class CadastroEventoActivity extends AppCompatActivity {
 
     private int id = 0;
+    private Spinner spinnerLocais;
+    private ArrayAdapter<Locais> locaisAdapter;
 
 
     //DATAPICKER
@@ -36,16 +42,15 @@ public class CadastroEventoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_evento);
         setTitle("Cadastro de Eventos");
-
+        spinnerLocais = findViewById(R.id.spinner_locais);
+        carregarLocais();
         carregarEvento();
         dataPicker();
     }
 
+
     private void dataPicker(){
-
-
         final EditText mostrarData= (EditText) findViewById(R.id.editText_data);
-
         mostrarData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +73,6 @@ public class CadastroEventoActivity extends AppCompatActivity {
                 mostrarData.setText(data);
             }
         };
-
     }
 
     private void carregarEvento(){
@@ -77,13 +81,31 @@ public class CadastroEventoActivity extends AppCompatActivity {
             Evento evento = (Evento) intent.getExtras().get("eventoEdicao");
             EditText editTextNome = findViewById(R.id.editText_nome);
             EditText editTextData = findViewById(R.id.editText_data);
-            EditText editTextLocal = findViewById(R.id.editText_local);
+
 
             editTextNome.setText(evento.getNome());
             editTextData.setText(evento.getData());
-            editTextLocal.setText(evento.getLocal());
+
+            int posicaoLocais = obterPosicaoLocais(evento.getLocais());
+            spinnerLocais.setSelection(posicaoLocais);
             id= evento.getId();
         }
+    }
+    private void carregarLocais(){
+        LocaisDAO locaisDao = new LocaisDAO(getBaseContext());
+        locaisAdapter = new ArrayAdapter<Locais>(CadastroEventoActivity.this,
+                android.R.layout.simple_spinner_item,
+                locaisDao.listar());
+        spinnerLocais.setAdapter(locaisAdapter);
+    }
+
+    public int obterPosicaoLocais(Locais locais){
+        for(int posicao =0; posicao < locaisAdapter.getCount(); posicao ++){
+            if(locaisAdapter.getItem(posicao).getId() == locais.getId()){
+                return posicao;
+            }
+        }
+        return 0;
     }
 
     public void onClickVoltar(View v){
@@ -93,13 +115,15 @@ public class CadastroEventoActivity extends AppCompatActivity {
     public void onClickSalvar(View v){
         EditText editTextNome = findViewById(R.id.editText_nome);
         EditText editTextData = findViewById(R.id.editText_data);
-        EditText editTextLocal = findViewById(R.id.editText_local);
+
 
         String nome = editTextNome.getText().toString();
         String data = String.valueOf(editTextData.getText());
-        String local = editTextLocal.getText().toString();
 
-        Evento evento = new Evento(id,nome,data,local);
+        Locais locais = (Locais) spinnerLocais.getSelectedItem();
+        Evento evento = new Evento(id,nome,data,locais);
+
+
         EventoDAO eventoDao = new EventoDAO(getBaseContext());
 
 
@@ -107,12 +131,9 @@ public class CadastroEventoActivity extends AppCompatActivity {
         if(evento.getNome().matches("")){
             Toast.makeText(CadastroEventoActivity.this,
                     "Nome é obrigatório", Toast.LENGTH_LONG).show();
-        }else if(evento.getData().matches("")){
+        }else if(evento.getData().matches("")) {
             Toast.makeText(CadastroEventoActivity.this,
                     "Data é obrigatório", Toast.LENGTH_LONG).show();
-        }else if(evento.getLocal().matches("")){
-            Toast.makeText(CadastroEventoActivity.this,
-                    "Local é obrigatório", Toast.LENGTH_LONG).show();
         }else{
             boolean salvou = eventoDao.salvar(evento);
 

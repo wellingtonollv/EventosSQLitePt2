@@ -5,56 +5,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CadastroEventoActivity">
+    tools:context=".CadastroLocaisActivity" >
 
     <TextView
         android:id="@+id/textView_nome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nome do evento" />
+        android:text="Nome" />
 
     <EditText
-        android:id="@+id/editText_nome"
+        android:id="@+id/editText_nome_locais"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName" />
 
     <TextView
-        android:id="@+id/textView_data"
+        android:id="@+id/textView_bairro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Data do Evento" />
+        android:text="Bairro" />
 
     <EditText
-        android:id="@+id/editText_data"
+        android:id="@+id/editText_bairro_locais"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:focusable="false"/>
+        android:inputType="textPersonName" />
 
     <TextView
-        android:id="@+id/textViewLocais"
+        android:id="@+id/textView_cidade"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Local do evento" />
+        android:text="Cidade" />
 
-    <Spinner
-        android:id="@+id/spinner_locais"
+    <EditText
+        android:id="@+id/editText_cidade_locais"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView_capacidade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Capacidade" />
+
+    <EditText
+        android:id="@+id/editText_capacidade_locais"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <Button
-            android:id="@+id/bnt_voltar"
+            android:id="@+id/btn_voltar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClickVoltar"
-            android:text="VOLTAR" />
+            android:text="voltar" />
 
         <Button
             android:id="@+id/btn_salvar"
@@ -62,7 +78,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClickSalvar"
-            android:text="SALVAR" />
+            android:text="salvar" />
     </LinearLayout>
-
 </LinearLayout>
