@@ -60,6 +60,6 @@ public class Locais implements Serializable {
 
     @Override
     public String toString() {
-        return nome_locais + " - " + this.bairro + " - " + this.cidade + " - " + this.capacidade;
+        return nome_locais + " - " + "Bairro:" + this.bairro + " - " + "Cidade: " + this.cidade + " - " + "Capacidade:" + this.capacidade + " pessoas";
     }
 }
