@@ -1,21 +1,20 @@
 package br.wellington.eventos;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.usage.UsageEvents;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.EventLog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
-
 import java.util.ArrayList;
+import java.util.List;
 
 import br.wellington.eventos.database.EventoDAO;
 import br.wellington.eventos.modelo.Evento;
@@ -25,6 +24,12 @@ public class MainActivity extends AppCompatActivity {
     private ListView listViewEventos;
     private ArrayAdapter<Evento> adapterEventos;
     private int id = 0;
+    private EditText editTextPesquisa;
+    private List<String> listaPesquisa = new ArrayList<String>() {{
+        add("");
+        add("");
+        add("ASC");
+    }};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         definirOnClickListenerListView();
         definirOnLongClickListener();
+        Pesquisa();
     }
 
     @Override
@@ -43,9 +49,35 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         EventoDAO eventoDao = new EventoDAO(getBaseContext());
         adapterEventos = new ArrayAdapter<Evento>(MainActivity.this,
-                android.R.layout.simple_list_item_1, eventoDao.listar());
+                android.R.layout.simple_list_item_1, eventoDao.listar(listaPesquisa));
 
         listViewEventos.setAdapter(adapterEventos);
+    }
+
+    private void Pesquisa(){
+        final EditText editTextPesquisar = findViewById(R.id.editTextPesquisa);
+
+        editTextPesquisar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                String pesquisa = s.toString();
+                listaPesquisa.set(0, pesquisa);
+                EventoDAO eventoDao = new EventoDAO(getBaseContext());
+                adapterEventos = new ArrayAdapter<Evento>(MainActivity.this,
+                        android.R.layout.simple_list_item_1,
+                        eventoDao.listar(listaPesquisa));
+                listViewEventos.setAdapter(adapterEventos);
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     private void definirOnLongClickListener(){
@@ -76,6 +108,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //ASC E DESC
+
+    public void onClickDescendente(View v) {
+        listaPesquisa.set(2, "DESC");
+        EventoDAO eventoDao = new EventoDAO(getBaseContext());
+        adapterEventos = new ArrayAdapter<Evento>(MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                eventoDao.listar(listaPesquisa));
+        listViewEventos.setAdapter(adapterEventos);
+    }
+
+    public void onClickAscendente(View v) {
+        listaPesquisa.set(2, "ASC");
+        EventoDAO eventoDao = new EventoDAO(getBaseContext());
+        adapterEventos = new ArrayAdapter<Evento>(MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                eventoDao.listar(listaPesquisa));
+        listViewEventos.setAdapter(adapterEventos);
+    }
+
     private void definirOnClickListenerListView(){
         listViewEventos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -98,5 +150,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
 }

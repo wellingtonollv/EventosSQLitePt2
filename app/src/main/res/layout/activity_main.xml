@@ -7,6 +7,36 @@
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editTextPesquisa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Pesquisar"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/btn_asc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClickAscendente"
+            android:text="ASC" />
+
+        <Button
+            android:id="@+id/btn_DES"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClickDescendente"
+            android:text="DESC" />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/listView_eventos"
         android:layout_width="match_parent"
@@ -25,4 +55,5 @@
         android:layout_height="wrap_content"
         android:onClick="onClickLocais"
         android:text="LOCAIS" />
+
 </LinearLayout>

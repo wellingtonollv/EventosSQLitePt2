@@ -43,6 +43,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_evento);
         setTitle("Cadastro de Eventos");
         spinnerLocais = findViewById(R.id.spinner_locais);
+
         carregarLocais();
         carregarEvento();
         dataPicker();
@@ -82,7 +83,6 @@ public class CadastroEventoActivity extends AppCompatActivity {
             EditText editTextNome = findViewById(R.id.editText_nome);
             EditText editTextData = findViewById(R.id.editText_data);
 
-
             editTextNome.setText(evento.getNome());
             editTextData.setText(evento.getData());
 
@@ -119,13 +119,10 @@ public class CadastroEventoActivity extends AppCompatActivity {
 
         String nome = editTextNome.getText().toString();
         String data = String.valueOf(editTextData.getText());
-
         Locais locais = (Locais) spinnerLocais.getSelectedItem();
+
         Evento evento = new Evento(id,nome,data,locais);
-
-
         EventoDAO eventoDao = new EventoDAO(getBaseContext());
-
 
 
         if(evento.getNome().matches("")){
@@ -134,7 +131,12 @@ public class CadastroEventoActivity extends AppCompatActivity {
         }else if(evento.getData().matches("")) {
             Toast.makeText(CadastroEventoActivity.this,
                     "Data é obrigatório", Toast.LENGTH_LONG).show();
-        }else{
+        }
+        else if(evento.getLocais().getNome_locais().matches("Selecione um local")){
+            Toast.makeText(CadastroEventoActivity.this,
+                    "Selecionar é obrigatório", Toast.LENGTH_LONG).show();
+        }
+        else{
             boolean salvou = eventoDao.salvar(evento);
 
             if(salvou){
@@ -144,7 +146,5 @@ public class CadastroEventoActivity extends AppCompatActivity {
                 Toast.makeText(CadastroEventoActivity.this, "Erro ao salvar!", Toast.LENGTH_LONG).show();
             }
         }
-
-
     }
 }

@@ -8,6 +8,11 @@ public class Evento implements Serializable {
     private String nome;
     private String data;
     private Locais locais;
+    private String pesquisa;
+
+    public Evento(String pesquisa) {
+        this.pesquisa = pesquisa;
+    }
 
     public Evento(int id, String nome, String data, Locais locais) {
         this.id = id;
@@ -15,6 +20,14 @@ public class Evento implements Serializable {
         this.data = data;
 
         this.locais = locais;
+    }
+
+    public String getPesquisa() {
+        return pesquisa;
+    }
+
+    public void setPesquisa(String pesquisa) {
+        this.pesquisa = pesquisa;
     }
 
     public Locais getLocais() {
@@ -45,9 +58,6 @@ public class Evento implements Serializable {
         return data;
     }
 
-    public void setData(String data) {
-        this.data = data;
-    }
 
 
 

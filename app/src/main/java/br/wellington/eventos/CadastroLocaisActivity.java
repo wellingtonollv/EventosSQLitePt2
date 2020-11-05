@@ -30,6 +30,7 @@ public class CadastroLocaisActivity extends AppCompatActivity {
         editTextCidade = findViewById(R.id.editText_cidade_locais);
         editTextCapacidade = findViewById(R.id.editText_capacidade_locais);
 
+
         carregarLocais();
     }
 
