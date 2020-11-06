@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         add("");
         add("ASC");
     }};
+    private ArrayAdapter<String> adapterCidades;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 String pesquisa = s.toString();
                 listaPesquisa.set(0, pesquisa);
                 EventoDAO eventoDao = new EventoDAO(getBaseContext());
-                adapterEventos = new ArrayAdapter<Evento>(MainActivity.this,
-                        android.R.layout.simple_list_item_1,
+                adapterEventos = new ArrayAdapter<Evento>(MainActivity.this, android.R.layout.simple_list_item_1,
                         eventoDao.listar(listaPesquisa));
                 listViewEventos.setAdapter(adapterEventos);
 
@@ -113,17 +113,16 @@ public class MainActivity extends AppCompatActivity {
     public void onClickDescendente(View v) {
         listaPesquisa.set(2, "DESC");
         EventoDAO eventoDao = new EventoDAO(getBaseContext());
+
         adapterEventos = new ArrayAdapter<Evento>(MainActivity.this,
-                android.R.layout.simple_list_item_1,
-                eventoDao.listar(listaPesquisa));
+                android.R.layout.simple_list_item_1, eventoDao.listar(listaPesquisa));
         listViewEventos.setAdapter(adapterEventos);
     }
 
     public void onClickAscendente(View v) {
         listaPesquisa.set(2, "ASC");
         EventoDAO eventoDao = new EventoDAO(getBaseContext());
-        adapterEventos = new ArrayAdapter<Evento>(MainActivity.this,
-                android.R.layout.simple_list_item_1,
+        adapterEventos = new ArrayAdapter<Evento>(MainActivity.this, android.R.layout.simple_list_item_1,
                 eventoDao.listar(listaPesquisa));
         listViewEventos.setAdapter(adapterEventos);
     }

@@ -54,14 +54,8 @@ public class EventoDAO {
         if (!listaPesquisa.get(0).equals("") && listaPesquisa.get(1).equals("")) {
             pesquisa = pesquisa + " WHERE " + EventoEntity.COLUMN_NAME_NOME + " LIKE '" +
                     listaPesquisa.get(0) + "%'";
-        } else if (listaPesquisa.get(0).equals("") && !listaPesquisa.get(1).equals("")) {
-            pesquisa = pesquisa + " WHERE " + LocaisEntity.COLUMN_NAME_CIDADE + " = '" +
-                    listaPesquisa.get(1) + "'";
-        } else if (!listaPesquisa.get(0).equals("") && !listaPesquisa.get(1).equals("")) {
-            pesquisa = pesquisa + " WHERE " + EventoEntity.COLUMN_NAME_NOME + " LIKE '" +
-                    listaPesquisa.get(0) + "%' AND " + LocaisEntity.COLUMN_NAME_CIDADE + " = '" +
-                    listaPesquisa.get(1) + "'";
         }
+
         List<Evento> eventos = new ArrayList<>();
         Cursor cursor = dbGateway.getDataBase().rawQuery(pesquisa + " ORDER BY " + EventoEntity.COLUMN_NAME_NOME + " COLLATE NOCASE " + listaPesquisa.get(2), null);
         while (cursor.moveToNext()) {

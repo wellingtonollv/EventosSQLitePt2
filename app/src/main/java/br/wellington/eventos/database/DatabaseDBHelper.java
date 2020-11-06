@@ -12,7 +12,7 @@ import br.wellington.eventos.database.contract.LocaisContract;
 public class DatabaseDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "db.evento";
-    private static final int DATABASE_VERSION = 18;
+    private static final int DATABASE_VERSION = 19;
 
     public DatabaseDBHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
